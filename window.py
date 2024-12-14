@@ -5,7 +5,6 @@ import tkinter.messagebox
 import ehentaiz2e
 import shutil
 
-
 class windowsMain(tkinter.Frame):
     def __init__(self, master=None):
         super().__init__()
@@ -79,6 +78,10 @@ tk = tkinter.Tk()
 
 tk.geometry("500x200+100+50")
 tk.title('zip转epub')
+try:
+    tk.iconphoto(True, tkinter.PhotoImage(file='logo.png'))
+except:
+    pass
 
 app = windowsMain(tk)
 
