@@ -39,7 +39,9 @@ class usrEpubBook(epub.EpubBook):
         self.setCover()
         self.setContent(range_cpter)
 
-        epub.write_epub(f'{bookname}.epub', self, {'plugins': [standard.SyntaxPlugin()]})
+        print(bookname)
+
+        epub.write_epub(f'{bookname}output.epub', self, {'plugins': [standard.SyntaxPlugin()]})
         
     def setCover(self):
         cover_image = epub.EpubImage()
@@ -64,6 +66,7 @@ class usrEpubBook(epub.EpubBook):
                 photo.content = open(f'{self.bookname}/{j[0]}/{i}', 'rb').read()
                 self.add_item(photo)
                 c1.content += '''<p><img src="../jpg/%s/%s" alt="Comic img"'/></p>''' % (j[0], i)
+                print(f'\r{i}/{len(j[1])}', end='')
             c1.set_language('hr')
             c1.properties.append('rendition:layout-pre-paginated rendition:orientation-landscape')
             c1.add_item(default_css)
@@ -84,7 +87,6 @@ if __name__ == '__main__':
     # usrEpubBook(t, bookname, cover)
 
     t = []
-
 
     def t(o):
         return int(o.split('-')[-1].split('.')[0])
