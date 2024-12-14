@@ -4,6 +4,12 @@ import tkinter.filedialog
 import tkinter.messagebox
 import ehentaiz2e
 import shutil
+import sys
+
+def get_resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 class windowsMain(tkinter.Frame):
     def __init__(self, master=None):
@@ -59,7 +65,7 @@ class windowsMain(tkinter.Frame):
         except Exception as e:
             print(e)
 
-        ehentaiz2e.z2b(self.name, 'cover.jpg')
+        ehentaiz2e.z2b(self.name, get_resource_path('img/cover.jpg'))
 
         try:
             shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
@@ -79,7 +85,7 @@ tk = tkinter.Tk()
 tk.geometry("500x200+100+50")
 tk.title('zip转epub')
 try:
-    tk.iconphoto(True, tkinter.PhotoImage(file='logo.png'))
+    tk.iconphoto(True, tkinter.PhotoImage(file=get_resource_path('img/logo.png')))
 except:
     pass
 
