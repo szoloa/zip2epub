@@ -8,14 +8,11 @@ import random
 class usrEpubBook(epub.EpubBook):
     def __init__(self, range_cpter, bookname, cover):
         super().__init__()
-
         self.set_identifier(f'comic{random.randint(0, 500000)}')
         self.set_title(bookname)
         self.set_language('en')
-
         self.bookname = bookname
         self.cover = cover
-
         self.add_author('Aleksandar Erkalovic')
         self.add_author('Danko Bananko', 
                         file_as='Gospodin Danko Bananko', 
@@ -28,19 +25,15 @@ class usrEpubBook(epub.EpubBook):
     object-fit: cover;
 }
                         '''
-
         default_css = epub.EpubItem(uid="style_default", 
                             file_name="style/default.css", 
                             media_type="text/css", 
                             content=self.style)
 
         self.add_item(default_css)
-
         self.setCover()
         self.setContent(range_cpter)
-
         print(bookname)
-
         epub.write_epub(f'{bookname}output.epub', self, {'plugins': [standard.SyntaxPlugin()]})
         
     def setCover(self):
@@ -75,22 +68,9 @@ class usrEpubBook(epub.EpubBook):
         self.spine += [*c]
 
 if __name__ == '__main__':
-    # t = []
-    # for i in range(len(os.listdir('童話般的你開始了戀愛猛攻'))):
-    #     t2 = []
-    #     for j in range(len(os.listdir(f'童話般的你開始了戀愛猛攻/第{i+1:02}话'))):
-    #         t2.append(f'{j}.jpg')
-    #     t.append((f'第{i+1:02}话', t2))
-
-    # bookname = '.chche/童話般的你開始了戀愛猛攻'
-    # cover = 'cover.jpg'
-    # usrEpubBook(t, bookname, cover)
-
     t = []
-
     def t(o):
         return int(o.split('-')[-1].split('.')[0])
-
     t = [('np', sorted(os.listdir('[Eromazun_(Ma-kurou)]_Mesu_Ochi_Onna_Muzan-sama_-_RAPE_OF_DEMON_SLAYER_4_(Kimetsu_no_Yaiba)_[Chinese]_[瑞树汉化组]_[Digital]/np'), key=t))]
     usrEpubBook(t, '[Eromazun_(Ma-kurou)]_Mesu_Ochi_Onna_Muzan-sama_-_RAPE_OF_DEMON_SLAYER_4_(Kimetsu_no_Yaiba)_[Chinese]_[瑞树汉化组]_[Digital]', 'cover.jpg')
         
