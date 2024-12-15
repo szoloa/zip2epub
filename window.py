@@ -59,7 +59,7 @@ class windowsMain(tkinter.Frame):
             pass
         except Exception as e:
             print(e)
-        ehentaiz2e.z2b(self.name, get_resource_path('img/cover.jpg'), string=self.string)
+        ehentaiz2e.z2b(self.name, string=self.string)
         try:
             shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
         except FileExistsError:
