@@ -24,13 +24,18 @@ class windowsMain(tkinter.Frame):
         button1 = tkinter.Button(self, text='打开文件', command=self.button1)
         button2 = tkinter.Button(self, text='转换', command=self.button2)
         button3 = tkinter.Button(self, text='清理缓存', command=self.button3)
+        self.string = tkinter.StringVar()
+        self.entry2 = tkinter.Label(self, textvariable=self.string)
 
         # self.lablel.grid(row=0, column=1)
+
+        # self.string.set('展示')
 
         self.entry.grid(row=1, column=0)
         button1.grid(row=1, column=1)
         button2.grid(row=2, column=1)
         button3.grid(row=2, column=0)
+        self.entry2.grid(row=3, column=0)
 
     def button1(self):
         path_ = tkinter.filedialog.askopenfilename(
@@ -54,7 +59,7 @@ class windowsMain(tkinter.Frame):
             pass
         except Exception as e:
             print(e)
-        ehentaiz2e.z2b(self.name, get_resource_path('img/cover.jpg'))
+        ehentaiz2e.z2b(self.name, get_resource_path('img/cover.jpg'), string=self.string)
         try:
             shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
         except FileExistsError:

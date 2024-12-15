@@ -6,13 +6,14 @@ import random
 # range_cpter 列表 元素为元组 元组第一个元素为章节名
 
 class usrEpubBook(epub.EpubBook):
-    def __init__(self, range_cpter, bookname, cover):
+    def __init__(self, range_cpter, bookname, cover, string):
         super().__init__()
         self.set_identifier(f'comic{random.randint(0, 500000)}')
         self.set_title(bookname)
         self.set_language('en')
         self.bookname = bookname
         self.cover = cover
+        self.string = string
         self.add_author('Aleksandar Erkalovic')
         self.add_author('Danko Bananko', 
                         file_as='Gospodin Danko Bananko', 
