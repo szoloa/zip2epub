@@ -20,12 +20,15 @@ class usrEpubBook(epub.EpubBook):
                         role='ill', 
                         uid='coauthor')
 
-        self.style = '''img {
+        self.style = '''
+img {
+    display: block;
+    margin: 0;
+    padding: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
 }
-                        '''
+'''
         default_css = epub.EpubItem(uid="style_default", 
                             file_name="style/default.css", 
                             media_type="text/css", 
