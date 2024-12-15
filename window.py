@@ -21,11 +21,8 @@ class windowsMain(tkinter.Frame):
     def createFrame(self):
         # self.lablel = tkinter.Label(self, text='Hello')
         self.entry = tkinter.Entry(self, width=48)
-
         button1 = tkinter.Button(self, text='打开文件', command=self.button1)
-
         button2 = tkinter.Button(self, text='转换', command=self.button2)
-
         button3 = tkinter.Button(self, text='清理缓存', command=self.button3)
 
         # self.lablel.grid(row=0, column=1)
@@ -39,13 +36,10 @@ class windowsMain(tkinter.Frame):
         path_ = tkinter.filedialog.askopenfilename(
             title='请选择文件',
         filetypes=[('压缩包', '.zip .ZIP')])
-
         if path_ == '':
             return
         path_ = path_.replace("/","////")
-
         self.name = path_.split('////')[-1]
-
         self.entry.delete(0, "end")
         self.entry.insert(0, path_)
 
@@ -53,20 +47,14 @@ class windowsMain(tkinter.Frame):
         if not os.path.exists('./.cache'):
             os.makedirs('./.cache')
         self.entry.get()
-
         (filepath, filename) = os.path.split(self.entry.get())
-
-        print(filename)
-
         try:
             shutil.copy(self.entry.get(), f'./.cache/{self.name}')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
-
         ehentaiz2e.z2b(self.name, get_resource_path('img/cover.jpg'))
-
         try:
             shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
         except FileExistsError:
@@ -88,7 +76,5 @@ try:
     tk.iconphoto(True, tkinter.PhotoImage(file=get_resource_path('img/logo.png')))
 except:
     pass
-
 app = windowsMain(tk)
-
 tk.mainloop()

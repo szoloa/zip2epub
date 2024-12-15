@@ -16,7 +16,6 @@ def getImg(url):
     driver.get(url)
     time.sleep(2)
     temp_height = 0
-
     while True:
         driver.execute_script("window.scrollBy(0, 200)")
         time.sleep(0.01)
@@ -27,13 +26,10 @@ def getImg(url):
         temp_height = check_height
         print('\r翻页中：' + str(check_height), end='')
     print()
-
     st = soup(driver.page_source, features='lxml')
     f = st.find(class_='header').text.replace(' ', '_').split('/')
-
     if not os.path.exists(f[0]):
         os.mkdir(f[0])
-
     if not os.path.exists(f'{f[0]}/{f[1]}'):
         os.mkdir(f'{f[0]}/{f[1]}')
     if st.find(class_='comicContent-list comic-size-1'):
@@ -43,7 +39,6 @@ def getImg(url):
     else:
         print('失败')
         return
-
     for i in range(len(t)):
         tp = 0
         if os.path.exists(f'{f[0]}/{f[1]}/{i}.jpg'):

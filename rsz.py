@@ -8,7 +8,6 @@ def resize_p(picpath, optpath):
     resized_image = image.resize((800, int(image.size[1] * 800 / image.size[0])))
     resized_image.save(optpath)
 
-
 if __name__ == '__main__':
     t = []
     for i in range(len(os.listdir('童話般的你開始了戀愛猛攻'))):
