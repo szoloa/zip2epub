@@ -8,7 +8,7 @@ def tt(o):
 def z2b(xname, cover = None, cpname = None, sortby = tt, string = None):
     if cpname == None:
         cpname = 'capter 1'
-    dr = f'.cache/{xname[:-4]}/'
+    dr = f'.cache/{xname[:-4]}'
     drr = f'.cache/{xname[:-3]}/{cpname}'
     print(f'正在转换{xname[:-4]}')
     if not os.path.exists(drr):
@@ -21,6 +21,6 @@ def z2b(xname, cover = None, cpname = None, sortby = tt, string = None):
     except:
         t = [(cpname, sorted(os.listdir(drr)))]
     if cover == None:
-        usrEpubBook(t, dr, drr+'/'+t[0][1][0], string, title=xname[:-4])
+        usrEpubBook(t, dr, drr+'/'+t[0][1][0], title=xname[:-4])
     else:
-        usrEpubBook(t, dr, cover, string)
+        usrEpubBook(t, dr, cover)
