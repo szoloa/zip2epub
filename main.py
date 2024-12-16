@@ -33,7 +33,7 @@ def ehentai(args):
     shutil.rmtree('./.cache')
     print('转换完成')
 
-def comic(args, cover='./img/cover.jpg'):
+def comic(args):
     for i in args:
         (filepath, filename) = os.path.split(i)
         try:
@@ -49,7 +49,7 @@ def comic(args, cover='./img/cover.jpg'):
             pass
         except Exception as e:
             print(e)
-    # shutil.rmtree('./.cache')
+    shutil.rmtree('./.cache')
     print('转换完成')
 
 def main(argv):

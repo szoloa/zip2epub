@@ -36,6 +36,9 @@ img {
         self.setCover()
         self.setContent(range_cpter)
         # print(bookname)
+        nav_item = epub.EpubNav()
+        self.add_item(nav_item)
+
         epub.write_epub(f'{bookname}/output.epub', self, {'plugins': [standard.SyntaxPlugin()]})
         
     def setCover(self):
@@ -51,8 +54,9 @@ img {
                             media_type="text/css", 
                             content=self.style)
         c = []
+        toc_items = []
         for j in range_capter:
-            c1 = epub.EpubHtml(title=f'{j[0]}', file_name=f'html/chpter_{j[0]}.xhtml')
+            c1 = epub.EpubHtml(title=f'{j[0]}', file_name=f'html/capter_{j[0]}.xhtml')
             c1.content = ''
             total_images = len(j[1])
             for idx, i in enumerate(j[1]):
@@ -63,11 +67,13 @@ img {
                 self.add_item(photo)
                 c1.content += '''<p><img src="../jpg/%s/%s" alt="Comic img"'/></p>''' % (j[0], i)
                 print(f'\r正在处理: {idx + 1}/{total_images} ({(idx + 1) / total_images:.2%})', end='')
-            print()
+            print(f'\n章节 "{j[0]}" 处理完成！')
+            toc_items.append(c1)
             c1.set_language('hr')
             c1.properties.append('rendition:layout-pre-paginated rendition:orientation-landscape')
             c1.add_item(default_css)
             self.add_item(c1)
             c.append(c1)
         self.spine += [*c]
+        self.toc = tuple(toc_items)  
         
