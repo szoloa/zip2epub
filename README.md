@@ -13,7 +13,10 @@ ehentai下载的zip文件转换epub格式电子书方便阅读
 或者使用命令行
 
     python main.py ipt1 ipt2 ...
+    python main.py --capter ipt1 ip2 ... # 转换带有章节的zip文件
+    python main.py --cover coverfile ipt1 ipt ipt3 # 自定义封面 
 
 清理缓存 
 
     python main.py clear
+
