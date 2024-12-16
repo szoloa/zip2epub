@@ -2,10 +2,7 @@ import zipfile
 from z2bookobj import usrEpubBook
 import os
 
-def tt(o):
-    return int(o.split('_')[0])
-
-def z2b(xname, cover = None, cpname = None, sortby = tt, string = None):
+def z2b(xname, cover = None, cpname = None, string = None):
     dr = f'.cache/{xname[:-4]}'
     print(f'正在转换{xname[:-4]}')
 
@@ -17,7 +14,6 @@ def z2b(xname, cover = None, cpname = None, sortby = tt, string = None):
     except Exception as e:
         t = None
         print(e)
-    print(t)
     if cover == None:
         usrEpubBook(t, dr, dr+'/'+t[0][0]+'/'+t[0][1][0], title=xname[:-4])
     else:
