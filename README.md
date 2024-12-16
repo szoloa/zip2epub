@@ -18,5 +18,5 @@ ehentai下载的zip文件转换epub格式电子书方便阅读
 
 清理缓存 
 
-    python main.py clear
+    python main.py --clear
 
