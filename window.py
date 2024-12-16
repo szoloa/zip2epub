@@ -65,7 +65,6 @@ class windowsMain(tkinter.Frame):
         except FileExistsError:
             pass
         except Exception as e:
-            # print(f'./.cache/{filename[-4]}/output.epub', filename[:-4])
             print(e)
         tkinter.messagebox.showinfo('完成', '转换完成')
 
