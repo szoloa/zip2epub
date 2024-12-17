@@ -8,19 +8,28 @@ from PIL import Image
 import os
 import sys
 import getopt
+import main as Main
+from PyPDF2 import PdfWriter, PdfReader
+
+global cover
+cover = None
 
 class usrPdfBook:
     def __init__(self, filename, filelist):
+        global cover
         self.pdf_filename = filename
-        self.base_width = letter[0]  # 使用letter宽度，可根据需要更改为其他值
+        self.base_width = letter[0] 
         self.canvasPage = canvas.Canvas(filename)
         self.canvasPage.setTitle(pathlib.Path(filename).stem)
+        if cover != None:
+            self.addPage(cover)
         total_images = len(filelist)
         for idx, i in enumerate(filelist):
             print(f'\r正在处理: {idx + 1}/{total_images} ({(idx + 1) / total_images:.2%})', end='')
             self.addPage(i)
         self.canvasPage.save()        
         print('\n转换完成')
+
     def addPage(self, image):
         pil_image = Image.open(image)
         image_width, image_height = pil_image.size
@@ -31,6 +40,51 @@ class usrPdfBook:
         self.canvasPage.drawImage(ImageReader(image), 0, 0, width=new_width, height=new_height)
         self.canvasPage.showPage()
 
+class usrPdfBookWithCapter(usrPdfBook):
+    def __init__(self, filename, filelist):
+        global cover
+        print('创建pdf',end='')
+        self.pdf_filename = filename
+        self.base_width = letter[0]  
+        self.canvasPage = canvas.Canvas(filename)
+        self.canvasPage.setTitle(pathlib.Path(filename).stem)
+        page = 0
+        if cover != None:
+            page +=1
+            self.addPage(cover)
+        self.bookmarks = []
+        total_images = len(filelist)
+        for j in filelist:
+            total_images = len(j[1])
+            print(f'\n{pathlib.Path(j[0]).stem} 处理中')
+            self.bookmarks.append({'title' : pathlib.Path(j[0]).stem, 'page_number' : page, 'parent': None})
+            for idx, i in enumerate(j[1]):
+                print(f'\r正在处理: {idx + 1}/{total_images} ({(idx + 1) / total_images:.2%})', end='')
+                self.addPage(f'{j[0]}/{i}')
+                page += 1
+        self.canvasPage.save()
+        self.add_bookmarks(filename)
+        print('\n转换完成')
+
+    # 添加目录信息
+    def add_bookmarks(self, filename):
+        output = PdfWriter()
+        pdffile = open(filename, "rb")
+        input_pdf = PdfReader(pdffile)
+        for bookmark in self.bookmarks:
+            output.add_outline_item(
+                title=bookmark['title'],
+                page_number=bookmark['page_number'],
+                parent=bookmark['parent']
+            )
+        # 复制PDF页面到输出PDF
+        for page in range(len(input_pdf.pages)):
+            output.add_page(input_pdf.pages[page])
+        with open(filename, "wb") as f:
+            output.write(f)
+        pdffile.close()
+
+
 def createPdfWithoutCapter(pathraw):
     (filepath, filename) = os.path.split(pathraw)
     path = pathlib.Path(pathraw)
@@ -40,10 +94,26 @@ def createPdfWithoutCapter(pathraw):
         zip_ref.extractall(f'.cache/{path.stem}')
     imagelist = [f'.cache/{path.stem}/{i}' for i in sorted(os.listdir(f'.cache/{path.stem}'))]
     usrPdfBook(f'.cache/{path.stem}.pdf', imagelist)
-    shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')    
-    shutil.rmtree('.cache')
+    shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
+    Main.clear() 
+
+def creatPdfWithCapter(pathraw):
+    (filepath, filename) = os.path.split(pathraw)
+    path = pathlib.Path(pathraw)
+    if not os.path.exists(f'.cache/{path.stem}'):
+        os.makedirs(f'.cache/{path.stem}')
+    with zipfile.ZipFile(f'{path}', 'r') as zip_ref:
+        zip_ref.extractall(f'.cache/{path.stem}')
+    capterlist = [(f'.cache/{path.stem}/{i}', sorted(os.listdir(f'.cache/{path.stem}/{i}'))) for i in sorted(os.listdir(f'.cache/{path.stem}'))]
+    usrPdfBookWithCapter(f'.cache/{path.stem}.pdf', capterlist)
+    shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
+    Main.clear()
+
+def clear():
+    Main.clear()
 
 def main(argv):
+    global cover
     convert = createPdfWithoutCapter
     try:
         opts, args = getopt.getopt(argv, "hc", ['clear','capter','help','cover='])
@@ -60,9 +130,9 @@ def main(argv):
         elif opt in ('--cover'):
             cover = arg
         elif opt in ('--capter', '-c'):
-            convert = comic
+            convert = creatPdfWithCapter
     for arg in args:
-        convert(arg)    
+        convert(arg)
 
 if __name__ == '__main__':    
     main(sys.argv[1:])
