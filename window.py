@@ -59,7 +59,7 @@ class windowsMain(tkinter.Frame):
             pass
         except Exception as e:
             print(e)
-        ehentaiz2e.z2b(self.name, string=self.string)
+        ehentaiz2e.z2b(self.name)
         try:
             shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
         except FileExistsError:

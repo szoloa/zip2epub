@@ -2,7 +2,7 @@
 __pycache__/
 build/
 dist/
-window.spec
+*.spec
 *.pdf
 *.epub
 *.zip
