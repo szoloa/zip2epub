@@ -20,3 +20,7 @@ ehentai下载的zip文件转换epub格式电子书方便阅读
 
     python main.py --clear
 
+转换为PDF
+
+    python zip2pdf.py ipt1 ipt2 ...
+    # 依赖reportlab, pillow
