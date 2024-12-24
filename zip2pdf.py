@@ -8,11 +8,14 @@ from PIL import Image
 import os
 import sys
 import getopt
-import main as Main
 from PyPDF2 import PdfWriter, PdfReader
 
 global cover
 cover = None
+
+def clear():
+	shutil.rmtree('./.cache')
+	print('缓存清理完成')
 
 class usrPdfBook:
     def __init__(self, filename, filelist):
@@ -95,7 +98,7 @@ def createPdfWithoutCapter(pathraw):
     imagelist = [f'.cache/{path.stem}/{i}' for i in sorted(os.listdir(f'.cache/{path.stem}'))]
     usrPdfBook(f'.cache/{path.stem}.pdf', imagelist)
     shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
-    Main.clear() 
+    clear() 
 
 def creatPdfWithCapter(pathraw):
     (filepath, filename) = os.path.split(pathraw)
@@ -107,10 +110,7 @@ def creatPdfWithCapter(pathraw):
     capterlist = [(f'.cache/{path.stem}/{i}', sorted(os.listdir(f'.cache/{path.stem}/{i}'))) for i in sorted(os.listdir(f'.cache/{path.stem}'))]
     usrPdfBookWithCapter(f'.cache/{path.stem}.pdf', capterlist)
     shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
-    Main.clear()
-
-def clear():
-    Main.clear()
+    clear()
 
 def main(argv):
     global cover
