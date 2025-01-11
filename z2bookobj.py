@@ -62,7 +62,7 @@ img {
             for idx, i in enumerate(j[1]):
                 photo = epub.EpubImage()
                 photo.file_name = f'jpg/{j[0]}/{i}'
-                photo.media_type = 'image/jpeg'
+                photo.media_type = 'image/webp'
                 photo.content = open(f'{self.bookname}/{j[0]}/{i}', 'rb').read()
                 self.add_item(photo)
                 c1.content += '''<p><img src="../jpg/%s/%s" alt="Comic img"'/></p>''' % (j[0], i)
