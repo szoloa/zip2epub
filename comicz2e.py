@@ -1,5 +1,5 @@
 import zipfile
-from z2bookobj import usrEpubBook
+from zip2epubobj import usrEpubBook
 import os
 
 def z2b(xname, cover = None, cpname = None, string = None):

@@ -6,3 +6,4 @@ dist/
 *.pdf
 *.epub
 *.zip
+.venv/

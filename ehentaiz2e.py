@@ -6,7 +6,7 @@ def z2b(xname, cover = None, cpname = None):
     if cpname == None:
         cpname = 'capter 1'
     dr = f'.cache/{xname[:-4]}'
-    drr = f'.cache/{xname[:-3]}/{cpname}'
+    drr = f'.cache/{xname[:-4]}/{cpname}'
     print(f'正在转换{xname[:-4]}')
     if not os.path.exists(drr):
         os.makedirs(drr)
