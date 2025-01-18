@@ -17,6 +17,7 @@ def clear():
 def ehentai(args):
     for i in args:
         (filepath, filename) = os.path.split(i)
+        comic_name, comic_extension = os.path.splitext(comicName)
         try:
             shutil.copy(i, f'./.cache/{filename}')
         except FileExistsError:
@@ -25,17 +26,19 @@ def ehentai(args):
             print(e)
         ehentaiz2e.z2b(filename, cover=cover)
         try:
-            shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
+            shutil.copy(f'./.cache/{comic_name}/output.epub', f'{filepath}/{comic_name}.epub')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
+            return
     shutil.rmtree('./.cache')
     print('转换完成')
 
 def comic(args):
     for i in args:
         (filepath, filename) = os.path.split(i)
+        comic_name, comic_extension = os.path.splitext(comicName)
         try:
             shutil.copy(i, f'./.cache/{filename}')
         except FileExistsError:
@@ -46,11 +49,12 @@ def comic(args):
         try:
             if not filepath:
                 filepath = '.'
-            shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
+            shutil.copy(f'./.cache/{comic_name}/output.epub', f'{filepath}/{comic_name}.epub')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
+            return
     shutil.rmtree('./.cache')
     print('转换完成')
 
