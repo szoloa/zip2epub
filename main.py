@@ -42,9 +42,9 @@ def comic(args):
             pass
         except Exception as e:
             print(e)
-        comicz2e.z2b(filename, cover=cover)
+        comicz2e.z2b(filename, pic_cover=cover)
         try:
-            if filepath == '':
+            if not filepath:
                 filepath = '.'
             shutil.copy(f'./.cache/{filename[:-4]}/output.epub', f'{filepath}/{filename[:-4]}.epub')
         except FileExistsError:

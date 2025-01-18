@@ -3,7 +3,7 @@ from ebooklib.plugins import standard
 import random
 
 class usrEpubBook(epub.EpubBook):
-    def __init__(self, range_cpter, bookname ,cover, title=None):
+    def __init__(self, range_cpter, bookname, cover, title=None):
         super().__init__()
         if title == None:
             title = bookname
@@ -12,21 +12,18 @@ class usrEpubBook(epub.EpubBook):
         self.set_language('en')
         self.bookname = bookname
         self.cover = cover
-        self.add_author('Aleksandar Erkalovic')
         self.add_author('Danko Bananko', 
                         file_as='Gospodin Danko Bananko', 
                         role='ill', 
-                        uid='coauthor')
+                        uid='ctreator')
 
-        self.style = '''
-img {
+        self.style = '''img {
     display: block;
     margin: 0;
     padding: 0;
     width: 100%;
     height: auto;
-}
-'''
+}'''
         default_css = epub.EpubItem(uid="style_default", 
                             file_name="style/default.css", 
                             media_type="text/css", 
