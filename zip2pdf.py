@@ -129,7 +129,12 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt in ('-h', '--help'):
-            print ('zip2epub.py  <inputfile1> <inputfil2> ...')
+            print('Usage: zip2pdf.py  <inputfile1> <inputfil2> ... \n\
+                  --clear clear the cache \n\
+                  --help print this text \n\
+                  --capter save pdf file with capter infomation \n\
+                  --cover put a cover pic at the first page of pdf file \
+                ')
             sys.exit()
         elif opt in ('--clear'):
             clear()
