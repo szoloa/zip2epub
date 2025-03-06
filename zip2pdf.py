@@ -29,7 +29,10 @@ class usrPdfBook:
         total_images = len(filelist)
         for idx, i in enumerate(filelist):
             print(f'\r正在处理: {idx + 1}/{total_images} ({(idx + 1) / total_images:.2%})', end='')
-            self.addPage(i)
+            try:
+                self.addPage(i)
+            except:
+                print("失败", idx+1)
         self.canvasPage.save()        
         print('\n转换完成')
 
@@ -97,6 +100,8 @@ def createPdfWithoutCapter(pathraw):
         zip_ref.extractall(f'.cache/{path.stem}')
     imagelist = [f'.cache/{path.stem}/{i}' for i in sorted(os.listdir(f'.cache/{path.stem}'))]
     usrPdfBook(f'.cache/{path.stem}.pdf', imagelist)
+    if filepath == '':
+        filepath = '.'
     shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
     clear() 
 
@@ -109,6 +114,8 @@ def creatPdfWithCapter(pathraw):
         zip_ref.extractall(f'.cache/{path.stem}')
     capterlist = [(f'.cache/{path.stem}/{i}', sorted(os.listdir(f'.cache/{path.stem}/{i}'))) for i in sorted(os.listdir(f'.cache/{path.stem}'))]
     usrPdfBookWithCapter(f'.cache/{path.stem}.pdf', capterlist)
+    if filepath == '':
+        filepath = '.'
     shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
     clear()
 
