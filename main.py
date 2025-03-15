@@ -1,38 +1,46 @@
 import sys
 import shutil
 import os
-import ehentaiz2e
-import comicz2e
+from .lib import ehentaiz2e
+from .lib import comicz2e
 import getopt
+import toml
+
+try: 
+    cacheFolder = toml.load('~/.config/zip2epub/config.toml')[cacheFolder]
+except:
+    cacheFolder = '~/.cache/zip2epub'
 
 cover = None
 
-if not os.path.exists('./.cache'):
-    os.makedirs('./.cache')
+if not os.path.exists(cacheFolder):
+    os.makedirs(cacheFolder)
 
 def clear():
-    shutil.rmtree('./.cache')
-    print('缓存清理完成')
+    if input(f'确认删除{cacheFolder}的所以内容？') == 'y':
+        shutil.rmtree(cacheFolder)
+        print('缓存清理完成')
 
 def ehentai(args):
     for i in args:
         (filepath, filename) = os.path.split(i)
         comic_name, comic_extension = os.path.splitext(comicName)
         try:
-            shutil.copy(i, f'./.cache/{filename}')
+            shutil.copy(i, f'{cacheFolder}/{filename}')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
         ehentaiz2e.z2b(filename, cover=cover)
+        if filepath == '':
+            filepath = '.'
         try:
-            shutil.copy(f'./.cache/{comic_name}/output.epub', f'{filepath}/{comic_name}.epub')
+            shutil.copy(f'{cacheFolder}/{comic_name}/output.epub', f'{filepath}/{comic_name}.epub')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
             return
-    shutil.rmtree('./.cache')
     print('转换完成')
 
 def comic(args):
@@ -40,7 +48,7 @@ def comic(args):
         (filepath, filename) = os.path.split(i)
         comic_name, comic_extension = os.path.splitext(comicName)
         try:
-            shutil.copy(i, f'./.cache/{filename}')
+            shutil.copy(i, f'{cacheFolder}/{filename}')
         except FileExistsError:
             pass
         except Exception as e:
@@ -49,13 +57,12 @@ def comic(args):
         try:
             if not filepath:
                 filepath = '.'
-            shutil.copy(f'./.cache/{comic_name}/output.epub', f'{filepath}/{comic_name}.epub')
+            shutil.copy(f'{cacheFolder}/{comic_name}/output.epub', f'{filepath}/{comic_name}.epub')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
             return
-    shutil.rmtree('./.cache')
     print('转换完成')
 
 def main(argv):

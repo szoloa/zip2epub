@@ -9,13 +9,25 @@ import os
 import sys
 import getopt
 from PyPDF2 import PdfWriter, PdfReader
+import toml
 
 global cover
 cover = None
 
+try: 
+    cacheFolder = toml.load('~/.config/zip2epub/config.toml')[cacheFolder]
+except:
+    cacheFolder = '~/.cache/zip2epub'
+
+cover = None
+
+if not os.path.exists(cacheFolder):
+    os.makedirs(cacheFolder)
+
 def clear():
-	shutil.rmtree('./.cache')
-	print('缓存清理完成')
+    if input(f'确认删除{cacheFolder}的所以内容？') == 'y':
+        shutil.rmtree(cacheFolder)
+        print('缓存清理完成')
 
 class usrPdfBook:
     def __init__(self, filename, filelist):
@@ -103,7 +115,6 @@ def createPdfWithoutCapter(pathraw):
     if filepath == '':
         filepath = '.'
     shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
-    clear() 
 
 def creatPdfWithCapter(pathraw):
     (filepath, filename) = os.path.split(pathraw)
@@ -117,7 +128,6 @@ def creatPdfWithCapter(pathraw):
     if filepath == '':
         filepath = '.'
     shutil.copy(f'.cache/{path.stem}.pdf', f'{filepath}/{path.stem}.pdf')   
-    clear()
 
 def main(argv):
     global cover
