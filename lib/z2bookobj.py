@@ -3,6 +3,18 @@ from ebooklib.plugins import standard
 import random
 
 class usrEpubBook(epub.EpubBook):
+    '''
+    从文件目录创建EPUB漫画。
+
+    ranger_cpter: 章节和图片信息。例如[['第一章', ['/path/to/capter2/1.jpg']], ['第二章',['/path/to/capter2/1.jpg']]] 
+
+    bookname: 创建漫画的名字。
+
+    cover: 封面图片。
+
+    这个的同一章节的图片会放在同一个的页面。
+
+    '''
     def __init__(self, range_cpter, bookname, cover, title=None):
         super().__init__()
         if title == None:

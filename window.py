@@ -2,7 +2,7 @@ import os
 import tkinter
 import tkinter.filedialog
 import tkinter.messagebox
-import ehentaiz2e
+from .lib import ehentaiz2e
 import shutil
 import sys
 
