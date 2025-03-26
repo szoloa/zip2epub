@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: zip2epub
+Version: 0.1.0
+Summary: A short description
+Home-page: https://github.com/szoloa/zip2epub
+Author: szoloa
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: setuptools
+Requires-Dist: ebooklib
+Requires-Dist: pillow
+Requires-Dist: toml

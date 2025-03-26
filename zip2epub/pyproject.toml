@@ -1,0 +1,3 @@
+[build-system]
+requires = ["pillow", "toml", "setuptools", "ebooklib"]
+build-backend = "setuptools.build_meta"

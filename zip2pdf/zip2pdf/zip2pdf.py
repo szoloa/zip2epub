@@ -15,9 +15,9 @@ global cover
 cover = None
 
 try: 
-    cacheFolder = toml.load('~/.config/zip2epub/config.toml')[cacheFolder]
+    cacheFolder = toml.load(os.path.expanduser('~/.config/zip2epub/config.toml'))[cacheFolder]
 except:
-    cacheFolder = '~/.cache/zip2epub'
+    cacheFolder = os.path.expanduser('~/.cache/zip2epub')
 
 cover = None
 

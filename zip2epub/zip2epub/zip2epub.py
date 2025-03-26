@@ -1,15 +1,11 @@
 import sys
 import shutil
 import os
-from .lib import ehentaiz2e
-from .lib import comicz2e
+from .ehentaiz2e import z2b as ehentaiz2b
+from .comicz2e import z2b as comicz2eb
 import getopt
 import toml
-
-try: 
-    cacheFolder = toml.load('~/.config/zip2epub/config.toml')[cacheFolder]
-except:
-    cacheFolder = '~/.cache/zip2epub'
+from . import cacheFolder
 
 cover = None
 
@@ -24,14 +20,14 @@ def clear():
 def ehentai(args):
     for i in args:
         (filepath, filename) = os.path.split(i)
-        comic_name, comic_extension = os.path.splitext(comicName)
+        comic_name, comic_extension = os.path.splitext(filename)
         try:
             shutil.copy(i, f'{cacheFolder}/{filename}')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
-        ehentaiz2e.z2b(filename, cover=cover)
+        ehentaiz2b(filename, cover=cover)
         if filepath == '':
             filepath = '.'
         try:
@@ -46,14 +42,14 @@ def ehentai(args):
 def comic(args):
     for i in args:
         (filepath, filename) = os.path.split(i)
-        comic_name, comic_extension = os.path.splitext(comicName)
+        comic_name, comic_extension = os.path.splitext(filename)
         try:
             shutil.copy(i, f'{cacheFolder}/{filename}')
         except FileExistsError:
             pass
         except Exception as e:
             print(e)
-        comicz2e.z2b(filename, pic_cover=cover)
+        comicz2b(filename, pic_cover=cover)
         try:
             if not filepath:
                 filepath = '.'
@@ -74,7 +70,7 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt in ('-h', '--help'):
-            print ('test.py -i <inputfile>')
+            print ('zip2epub <zipfile>')
             sys.exit()
         elif opt in ('--clear'):
             clear()

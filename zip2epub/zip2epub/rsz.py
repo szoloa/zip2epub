@@ -16,9 +16,6 @@ def webp2jpeg(ipt):
     image.save(f'{ipt[:-4]}jpg')
     os.remove(ipt)
 
-if __name__ == '__main__':
-    for i in os.listdir('/home/szoloa/Pictures/DownloadPicture/jpg/DownloadPicture'):
-        resize_p('/home/szoloa/Pictures/DownloadPicture/jpg/DownloadPicture/'+i, '/home/szoloa/Pictures/DownloadPicture/jpg/DownloadPicture/'+i+'.jpg')
 
 # if __name__ == '__main__':
 #     for i in os.listdir('.cache/童话般的你开始恋爱猛攻'):
