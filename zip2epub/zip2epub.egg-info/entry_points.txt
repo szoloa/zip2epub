@@ -1,2 +1,0 @@
-[console_scripts]
-zip2epub = zip2epub.main:cli

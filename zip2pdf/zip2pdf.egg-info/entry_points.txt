@@ -1,2 +1,0 @@
-[console_scripts]
-zip2pdf = zip2pdf.cli:cli
